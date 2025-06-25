@@ -1,0 +1,49 @@
+server:
+  port: 8080
+
+logging:
+  level:
+    com.gene: DEBUG
+    org.springframework.web: TRACE
+    org.springframework.security: TRACE
+
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          cognito:
+            client-id: ${COGNITO_CLIENT}
+            client-secret: ${COGNITO_SECRET}
+            scope: openid
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            clientName: ${COGNITO_CLIENT_NAME}
+            authorization-grant-type: authorization_code
+        provider:
+          cognito:
+            user-name-attribute: username
+            issuer-uri: "https://cognito-idp.${REGION}.amazonaws.com/${COGNITO_USER_POOL}"
+      resourceserver:
+        jwt:
+          jwk-set-uri: "${spring.security.oauth2.client.provider.cognito.issuer-uri}/.well-known/jwks.json"
+  ssl:
+    bundle:
+      jks:
+        cognito:
+          truststore:
+            location: "classpath:truststore.jks"
+            password: ${TRUSTSTORE_PASSWORD}
+
+springdoc:
+  swagger-ui:
+    syntaxHighlight:
+      theme: obsidian
+    path: /swagger-ui
+    docExpansion: none
+    oauth:
+      client-id: ${COGNITO_CLIENT:}
+      client-secret: ${COGNITO_SECRET:}
+  show-actuator: false
+  oAuthFlow:
+    tokenUrl: "${COGNITO_AUTH_DOMAIN}/oauth2/token"
+    authorizationUrl: "${COGNITO_AUTH_DOMAIN}/oauth2/authorize"
