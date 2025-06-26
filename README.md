@@ -2,6 +2,8 @@
 
 A Spring Boot example application demonstrating how to authenticate with Amazon Cognito using Spring Security's OAuth 2.0 support. The authorization solution is based on a user store configured through application properties.
 
+![Gradle Build](https://github.com/webcane/hello-spring-boot-cognito/workflows/Gradle%20Build/badge.svg)
+
 ![swagger-ui](etc/swagger-ui.png)
 
 ## API
