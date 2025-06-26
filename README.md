@@ -1,4 +1,6 @@
-# hello spring-boot cognito
+# hello spring boot cognito
+
+A Spring Boot example application demonstrating how to authenticate with Amazon Cognito using Spring Security's OAuth 2.0 support. The authorization solution is based on a user store configured through application properties.
 
 ![swagger-ui](etc/swagger-ui.png)
 
