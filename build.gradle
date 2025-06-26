@@ -39,3 +39,14 @@ dependencies {
 test {
     useJUnitPlatform()
 }
+
+jar {
+    enabled = false
+}
+
+bootJar {
+    archiveFileName = "${project.name}.jar"
+    layered {
+        enabled = true
+    }
+}

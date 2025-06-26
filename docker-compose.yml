@@ -1,0 +1,36 @@
+services:
+  builder:
+    image: gradle:8.14.2-jdk21-ubi-minimal
+    container_name: hello-spring-boot-cognito-gradle-builder
+    working_dir: /app
+    volumes:
+      - .:/app   # Mount the current directory to `/app` in the container
+      - gradle-cache:/root/.gradle # Reuse Gradle cache for faster builds
+    command: gradle bootJar
+    networks:
+      - hello-spring-boot-cognito-network
+
+  app:
+    image: eclipse-temurin:21-jdk-jammy # Use a lightweight OpenJDK image for running the app
+    container_name: hello-spring-boot-cognito-app
+    depends_on:
+      builder:
+        condition: service_completed_successfully
+    working_dir: /app
+    volumes:
+      - .:/app   # Mount the current directory to `/app` in the container
+    env_file:
+      - .env
+    ports:
+      - "$SERVER_PORT:$SERVER_PORT"
+    command: java -jar build/libs/hello-spring-boot-cognito.jar
+    restart: always
+    networks:
+      - hello-spring-boot-cognito-network
+
+volumes:
+  gradle-cache:
+  voice:
+
+networks:
+  hello-spring-boot-cognito-network:

@@ -27,7 +27,7 @@ To access GET endpoint, a user should be authorized. The POST endpoint is protec
   - use OAuth JWT access tokens granted by Cognito Identity Provider
   - jwt tokens are not overridden in the app. it relies solely on Cognito tokens
   - end-users authenticated on the swagger-ui page only
-  - service account use the Cognito auth token endpoint directly
+  - service account uses the Cognito auth token endpoint directly
 - Authorization
   - users and roles configured using application properties
   - service accounts can be easily registered in the system alongside regular end-users
@@ -50,12 +50,12 @@ Another possible authorization solutions are:
 
 * generate app clients to use for SSO
 * retrieve client secrets
-* 
 
 ### set environment variables
-* set environment variables listed in the `default.env` file:
+* rename default.env to .env and specify required environmental variables there:
     ```
-    REGION=us-west-2  
+    SERVER_PORT=
+    REGION= 
     COGNITO_CLIENT=
     COGNITO_SECRET=  
     COGNITO_CLIENT_NAME=
@@ -65,7 +65,7 @@ Another possible authorization solutions are:
     ```
   
 ### configure roles
-To configure users and their roles set additional environmental variables:
+To configure users and their roles, set additional environmental variables:
 ```
 APP_ROLES_WHITELIST=ROLE_<user_group>
 APP_USERS_<username without underscore>_GROUPS=<list of user groups separated by comma>
@@ -73,9 +73,9 @@ APP_USERS_<username without underscore>_GROUPS=<list of user groups separated by
 To register more users add additional `APP_USERS_` env variables. All user groups will be mapped to roles with the same names.
 
 ### start up
-* start application as usual
+* start the application using docker compose
 ```bash
-./gradlew bootRun -DREGION=us-west-2 ..
+docker compose up --detach
 ```
 
 ### login
